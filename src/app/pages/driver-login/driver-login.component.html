@@ -1,0 +1,85 @@
+<app-spinner [isLoading]="isLoading" [text]="'Logging In...'"></app-spinner>
+
+<main
+  class="w-full h-[100dvh] max-w-screen-lg mx-auto flex flex-col lg:flex-row items-center justify-center p-4"
+>
+  <div
+    class="lg:w-1/2 w-full p-6 flex flex-col justify-center text-center lg:text-left"
+  >
+    <h1 class="text-4xl font-semibold text-gray-800 mb-4">
+      Join our Driver Network
+    </h1>
+    <p class="text-lg text-gray-700 mb-6">
+      Become a key part of our growing logistics network. We are looking for
+      dedicated drivers to help us deliver to our customers efficiently. Whether
+      you’re just starting or have years of experience, we offer flexible
+      schedules and competitive pay.
+    </p>
+    <p class="text-lg text-gray-700">
+      Already registered? Log in to access your driver dashboard and start
+      accepting deliveries.
+    </p>
+  </div>
+
+  <div class="lg:w-1/2 w-full max-w-sm p-6 bg-white rounded-lg shadow-lg">
+    <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">
+      Driver Login
+    </h2>
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="handleSubmit()"
+      class="flex flex-col gap-6"
+    >
+      <label class="flex flex-col">
+        <span class="text-base font-semibold text-gray-700">Email:</span>
+        <input
+          formControlName="email"
+          type="email"
+          class="text-lg border border-gray-300 p-3 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your email"
+        />
+        @if ( loginForm.get('email')?.touched && loginForm.get('email')?.invalid
+        ) {
+        <div class="text-red-500 text-sm mt-1">
+          @if (loginForm.get('email')?.hasError('required')) {
+          <div>Email is required.</div>
+          } @if (loginForm.get('email')?.hasError('email')) {
+          <div>Please enter a valid email address.</div>
+          }
+        </div>
+        }
+      </label>
+
+      <label class="flex flex-col">
+        <span class="text-base font-semibold text-gray-700">Password:</span>
+        <input
+          formControlName="password"
+          type="password"
+          class="text-lg border border-gray-300 p-3 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your password"
+        />
+        @if ( loginForm.get('password')?.touched &&
+        loginForm.get('password')?.invalid ) {
+        <div class="text-red-500 text-sm mt-1">
+          @if (loginForm.get('password')?.hasError('required')) {
+          <div>Password is required.</div>
+          }
+        </div>
+        }
+      </label>
+
+      <button
+        class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50"
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        {{ isLoading ? "Logging in..." : "Log In" }}
+      </button>
+    </form>
+
+    @if (error) {
+    <div class="text-red-500 text-base font-semibold mt-4">
+      {{ error }}
+    </div>
+    }
+  </div>
+</main>

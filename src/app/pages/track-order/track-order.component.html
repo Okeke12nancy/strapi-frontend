@@ -1,0 +1,79 @@
+<main
+  class="w-full max-w-screen-lg mx-auto flex flex-col lg:flex-row items-start p-4"
+>
+  <div class="lg:w-1/2 w-full p-4 bg-white rounded-lg shadow-lg my-4">
+    <h1 class="text-center uppercase text-4xl my-3 font-bold text-gray-800">
+      Track Your Order
+    </h1>
+
+    <app-spinner [isLoading]="isLoading" [text]="'Tracking...'"></app-spinner>
+
+    @if (orderData) {
+    <div>
+      <h2 class="text-xl font-bold text-center mb-3 text-gray-800">
+        Order Information
+      </h2>
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-lg font-medium">
+            Sender:
+            <span class="font-semibold text-gray-900">{{
+              orderData.senderName
+            }}</span>
+          </p>
+          <p class="text-lg font-medium">
+            Receiver:
+            <span class="font-semibold text-gray-900">{{
+              orderData.receiverName
+            }}</span>
+          </p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-600 mb-2">Shipment Status</p>
+          <p
+            class="text-lg font-bold p-2 rounded-full"
+            [ngClass]="{
+              'bg-green-200 text-green-800':
+                orderData?.shipment.data.attributes.shipmentStatus ===
+                'completed',
+              'bg-yellow-200 text-yellow-800':
+                orderData?.shipment.data.attributes.shipmentStatus ===
+                'in_transit',
+              'bg-gray-200 text-gray-800':
+                orderData?.shipment.data.attributes.shipmentStatus ===
+                'pending',
+              'bg-blue-200 text-blue-800':
+                !orderData?.shipment.data.attributes.shipmentStatus
+            }"
+          >
+            {{ orderData?.shipment.data.attributes.shipmentStatus }}
+          </p>
+        </div>
+      </div>
+      <div class="mt-4">
+        <h3 class="text-lg font-semibold text-gray-800">Item Details:</h3>
+        <p class="text-gray-700">{{ orderData.itemDetails }}</p>
+      </div>
+      <div class="mt-4">
+        <h3 class="text-lg font-semibold text-gray-800">
+          Delivery Instructions:
+        </h3>
+        <p class="text-gray-700">{{ orderData.deliveryInstructions }}</p>
+      </div>
+    </div>
+    }
+  </div>
+
+  @if (orderData?.shipment) {
+  <div class="lg:w-1/2 w-full max-w-3xl h-[500px] my-4 lg:ml-4">
+    <div
+      id="map"
+      class="w-full h-full rounded-lg shadow-lg border border-blue-200"
+    ></div>
+  </div>
+  } @if (error) {
+  <div class="text-red-500 font-semibold text-2xl text-center mt-4 w-full">
+    {{ error }}
+  </div>
+  }
+</main>

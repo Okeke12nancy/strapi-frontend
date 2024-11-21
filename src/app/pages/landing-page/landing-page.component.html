@@ -1,0 +1,70 @@
+<header class="w-full max-w-screen-lg mx-auto">
+  <nav class="w-full p-4 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <a
+        routerLink="/"
+        class="text-2xl font-semibold text-gray-800 hover:text-blue-600"
+        >Logistics</a
+      >
+    </div>
+
+    <div class="flex items-center gap-6">
+      <a
+        routerLink="/"
+        class="text-lg font-medium text-gray-700 hover:text-blue-500 transition duration-300"
+        >Home</a
+      >
+      <a
+        routerLink="/driver/login"
+        class="px-4 py-2 rounded-lg border border-gray-500 text-gray-700 hover:bg-gray-200 transition duration-300"
+        >Are you a driver?</a
+      >
+      <a
+        routerLink="/driver/register"
+        class="px-4 py-2 rounded-lg border border-gray-500 text-gray-700 hover:bg-gray-200 transition duration-300"
+        >Want to be a driver?</a
+      >
+    </div>
+  </nav>
+</header>
+
+<main
+  class="w-full h-[100dvh] max-w-screen-lg mx-auto flex flex-col items-center justify-center text-center py-10"
+>
+  <h1 class="text-4xl sm:text-6xl font-bold text-gray-800">
+    <span class="bg-blue-500 text-white px-4 py-2 rounded-lg">Deliveries</span>
+    done right!
+  </h1>
+
+  <p class="text-lg sm:text-2xl text-gray-600 mt-8 mb-8">
+    Track your orders and stay updated in real-time. Your trusted delivery
+    partner.
+  </p>
+
+  <form
+    [formGroup]="trackForm"
+    (ngSubmit)="handleSubmit()"
+    class="flex flex-col sm:flex-row gap-4 items-center w-full max-w-lg mx-auto"
+  >
+    <input
+      formControlName="orderId"
+      class="w-full sm:w-[500px] p-3 border-2 border-gray-300 rounded-lg outline-none focus:border-blue-500"
+      placeholder="Enter your Order ID to track"
+      (input)="error && (error = '')"
+    />
+    <button
+      type="submit"
+      class="sm:px-6 sm:py-3 px-6 py-3 mt-4 sm:mt-0 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 transition-all duration-300 ease-in-out flex items-center justify-center w-full sm:w-[500px]"
+      [disabled]="trackForm.invalid"
+    >
+      <lucide-icon [name]="Search" class="w-6 h-6 inline-block mr-2" />
+      Track Order
+    </button>
+  </form>
+
+  @if (error) {
+  <span class="text-red-500 font-semibold text-sm mt-2">{{ error }}</span>
+  }
+</main>
+
+<app-spinner [isLoading]="isLoading"></app-spinner>

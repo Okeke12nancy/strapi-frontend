@@ -1,0 +1,103 @@
+<app-spinner [isLoading]="isLoading" [text]="'Registering...'"></app-spinner>
+<main
+  class="w-full h-[100dvh] max-w-screen-lg mx-auto flex flex-col lg:flex-row items-center justify-center p-4"
+>
+  <div
+    class="lg:w-1/2 w-full p-6 flex flex-col justify-center text-center lg:text-left"
+  >
+    <h1 class="text-4xl font-semibold text-gray-800 mb-4">
+      Join Our Driver Network
+    </h1>
+    <p class="text-lg text-gray-700 mb-6">
+      Are you ready to make a difference in the logistics world? By joining our
+      driver network, you’ll have access to flexible schedules, great pay, and
+      the chance to be part of a growing team that values dedication and
+      efficiency.
+    </p>
+    <p class="text-lg text-gray-700">
+      Sign up today and start your journey with us. Once registered, you’ll be
+      able to track deliveries, manage your routes, and get paid for your hard
+      work.
+    </p>
+  </div>
+
+  <div class="lg:w-1/2 w-full max-w-sm p-6 bg-white rounded-lg shadow-lg">
+    <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">
+      Driver Registration
+    </h2>
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="handleSubmit()"
+      class="flex flex-col gap-6"
+    >
+      <label class="flex flex-col">
+        <span class="text-base font-semibold text-gray-700">Name:</span>
+        <input
+          formControlName="name"
+          type="text"
+          class="text-lg border border-gray-300 p-3 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your full name"
+        />
+        @if ( registerForm.get('name')?.touched &&
+        registerForm.get('name')?.invalid ) {
+        <div class="text-red-500 text-sm mt-1">
+          @if (registerForm.get('name')?.hasError('required')) {
+          <div>Name is required.</div>
+          }
+        </div>
+        }
+      </label>
+
+      <label class="flex flex-col">
+        <span class="text-base font-semibold text-gray-700">Email:</span>
+        <input
+          formControlName="email"
+          type="email"
+          class="text-lg border border-gray-300 p-3 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your email"
+        />
+        @if ( registerForm.get('email')?.touched &&
+        registerForm.get('email')?.invalid ) {
+        <div class="text-red-500 text-sm mt-1">
+          @if (registerForm.get('email')?.hasError('required')) {
+          <div>Email is required.</div>
+          } @if (registerForm.get('email')?.hasError('email')) {
+          <div>Please enter a valid email address.</div>
+          }
+        </div>
+        }
+      </label>
+
+      <label class="flex flex-col">
+        <span class="text-base font-semibold text-gray-700">Password:</span>
+        <input
+          formControlName="password"
+          type="password"
+          class="text-lg border border-gray-300 p-3 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your password"
+        />
+        @if ( registerForm.get('password')?.touched &&
+        registerForm.get('password')?.invalid ) {
+        <div class="text-red-500 text-sm mt-1">
+          @if (registerForm.get('password')?.hasError('required')) {
+          <div>Password is required.</div>
+          }
+        </div>
+        }
+      </label>
+
+      <button
+        class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50"
+        [disabled]="registerForm.invalid || isLoading"
+      >
+        {{ isLoading ? "Registering..." : "Register" }}
+      </button>
+    </form>
+
+    @if (error) {
+    <div class="text-red-500 text-base font-semibold mt-4">
+      {{ error }}
+    </div>
+    }
+  </div>
+</main>
